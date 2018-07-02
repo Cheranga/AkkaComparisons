@@ -1,6 +1,8 @@
 ﻿using Akka.Actor;
 using Akka.Routing;
 using Api.Search;
+using Autofac;
+using Autofac.Core;
 using RestWebApi.Actors.Actors;
 
 namespace RestWebApi.Actors
@@ -21,6 +23,12 @@ namespace RestWebApi.Actors
         public static void Initialise()
         {
             ActorSystem = Akka.Actor.ActorSystem.Create("PlateActorSystem");
+
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<LocalPlateRepository>().As<IPlateRepository>().SingleInstance();
+            containerBuilder.RegisterType<SearchActor>().SingleInstance();
+            
+
 
             var props = Props.Create(() => new SearchActor()).WithRouter(FromConfig.Instance);
 

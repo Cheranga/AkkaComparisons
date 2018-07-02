@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Api.Search;
+using Autofac;
+using Autofac.Integration.Mvc;
 
 namespace RestWebApi
 {
@@ -13,6 +16,13 @@ namespace RestWebApi
     {
         protected void Application_Start()
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<LocalPlateRepository>().As<IPlateRepository>().SingleInstance();
+            var container =  builder.Build();
+
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

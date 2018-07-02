@@ -7,23 +7,7 @@ namespace Api.Search
 {
     public class LocalPlateRepository : IPlateRepository
     {
-        private static IEnumerable<string> _plates;
-
-        private static LocalPlateRepository _instance;
-
-        private LocalPlateRepository()
-        {
-        }
-
-        public static LocalPlateRepository Instance
-        {
-            get
-            {
-                _plates = Enumerable.Range(1, 1000).Select(x => $"abc{x}");
-
-                return _instance = _instance ?? new LocalPlateRepository();
-            }
-        }
+        private readonly IEnumerable<string> _plates = Enumerable.Range(1, 1000).Select(x => $"abc{x}");
 
         public Task<SearchResult> GetAsync(string search)
         {
