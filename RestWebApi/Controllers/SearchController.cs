@@ -8,9 +8,9 @@ namespace RestWebApi.Controllers
     {
         private readonly IPlateRepository _search;
 
-        public SearchController(IPlateRepository repository)
+        public SearchController()
         {
-            _search = repository;
+            _search = LocalPlateRepository.Instance;
         }
 
         public async Task<IHttpActionResult> Get(string search)

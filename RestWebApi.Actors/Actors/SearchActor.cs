@@ -9,9 +9,9 @@ namespace RestWebApi.Actors.Actors
     {
         private readonly IPlateRepository _search;
 
-        public SearchActor(IPlateRepository repository)
+        public SearchActor()
         {
-            _search = repository;
+            _search = LocalPlateRepository.Instance;
             ReceiveAsync<PlateSearchMessage>(m => SearchPlateAsync(m).PipeTo(Sender));
         }
 
